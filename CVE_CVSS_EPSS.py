@@ -171,32 +171,23 @@ def remplissageEPSS():
 
 # effectuer une requete (résistif aux restrictions du NIST)
 def requeteCustom(requete):
-    compteurException = 0
     while True :
         try :
+            start = time.time()
             reponse = requests.get(requete, timeout=3600)
-            print (reponse.status_code)
+            end = time.time()
+            responseTime = end - start
             if reponse.status_code > 399 :
-                compteurException = compteurException + 1
-                print("Exception n°", compteurException)
-                if compteurException > 10 :
-                    time.sleep(20)
-                    continue
-                else :
-                    time.sleep(6)
-                    continue
-            else :
-                time.sleep(6)
-                break
-        except :
-            time.sleep(6)
-            compteurException = compteurException + 1
-            print("Exception n°", compteurException)
-            if compteurException > 10 :
+                print("request failed")
                 time.sleep(20)
                 continue
-            else :
-                continue
+            if responseTime < 6.1:
+                print("too fast !")
+                time.sleep(6.1-responseTime)
+                break
+        except :
+            print("request failed")
+            time.sleep(20)
     return reponse
 
 ### MAIN avec les 2 grosses boucles (CVE & CVSS) puis (EPSS)

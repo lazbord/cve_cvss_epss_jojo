@@ -56,7 +56,7 @@ def calculNbCVEGlobal () :
 
 # Appel API NIST pour avoir les infos sur les CVE données dans l'URL (entre l'index et le nombre max de résultats) & ecrire dans CVE_CVSS_EPSS_table
 def funcDataNIST(offset,paramCVSS) :
-    requeteCVE = https://services.nvd.nist.gov/rest/json/cves/2.0/?resultsPerPage= + str(offset[0]) + "&startIndex=" + str(offset[1]) + '&' + paramCVSS
+    requeteCVE = "https://services.nvd.nist.gov/rest/json/cves/2.0/?resultsPerPage=" + str(offset[0]) + "&startIndex=" + str(offset[1]) + '&' + paramCVSS
     print(requeteCVE)
     reponse = requeteCustom(requeteCVE)
     data = reponse.json()
